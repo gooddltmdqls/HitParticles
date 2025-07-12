@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "hit_particles",
+  "version": "${version}",
+  "name": "HitParticles",
+  "description": "Add hit particle into your game!",
+  "authors": [
+    "Icetang0123"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/hit_particles/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "kr.icetang0123.mods.hit_particles.HitParticles"
+    ],
+    "modmenu": [
+      "kr.icetang0123.mods.hit_particles.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "HitParticles.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": ">=${min_minecraft_ver}"
+  },
+  "suggests": {
+    "cloth-config": "*",
+    "modmenu": "*"
+  }
+}
