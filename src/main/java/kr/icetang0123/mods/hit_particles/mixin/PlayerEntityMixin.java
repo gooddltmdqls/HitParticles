@@ -29,7 +29,7 @@ public class PlayerEntityMixin {
             double velocityY = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
             double velocityZ = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
 
-            target.getEntityWorld().addParticle(
+            target.getWorld().addParticleClient(
                     ParticleTypes.ENCHANTED_HIT,
                     target.getX(),
                     (target.getHeight() + (target.getY() * 2)) / 2,
