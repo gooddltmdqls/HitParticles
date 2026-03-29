@@ -4,12 +4,12 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import kr.icetang0123.mods.hit_particles.HitParticles;
 import kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory;
-import net.minecraft.command.argument.ParticleEffectArgumentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.registry.BuiltinRegistries;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.commands.arguments.ParticleArgument;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.data.registries.VanillaRegistries;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,21 +18,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-@Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
+@Mixin(Player.class)
+public class PlayerMixin {
     @Unique
-    private static RegistryWrapper.WrapperLookup registries = BuiltinRegistries.createWrapperLookup();
+    private static HolderLookup.Provider registries = VanillaRegistries.createLookup();
 
     @Inject(method = "attack", at = @At("TAIL"))
     void attack(Entity target, CallbackInfo ci) {
         String particleType = ConfigScreenFactory.particleType.get();
 
-        ParticleEffect result;
+        ParticleOptions result;
 
         StringReader reader = new StringReader(particleType);
 
         try {
-            result = ParticleEffectArgumentType.readParameters(reader, registries);
+            result = ParticleArgument.readParticle(reader, registries);
         } catch (CommandSyntaxException ignored) {
             HitParticles.LOGGER.warn("Failed to parse particle. Ignoring!");
 
@@ -65,10 +65,10 @@ public class PlayerEntityMixin {
             double velocityY = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
             double velocityZ = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
 
-            target.getEntityWorld().addParticleClient(
+            target.level().addParticle(
                     result,
                     target.getX() + xOffset,
-                    (spawnAtFeet ? target.getY() : (target.getHeight() + (target.getY() * 2)) / 2) + yOffset,
+                    (spawnAtFeet ? target.getY() : (target.getBbHeight() + (target.getY() * 2)) / 2) + yOffset,
                     target.getZ() + zOffset,
                     (Math.random() * (velocityMax - velocityMin) + velocityMin) * velocityX,
                     (Math.random() * (velocityMax - velocityMin) + velocityMin) * velocityY,

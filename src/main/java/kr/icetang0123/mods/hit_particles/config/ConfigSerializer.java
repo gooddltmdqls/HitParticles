@@ -2,19 +2,18 @@ package kr.icetang0123.mods.hit_particles.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.client.MinecraftClient;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.client.Minecraft;
 
 public class ConfigSerializer {
     public Map<String, Object> load() {
         try {
-            File configFile = new File(Paths.get(MinecraftClient.getInstance().runDirectory.getAbsolutePath(), "config", "hit_particles.json").toUri());
+            File configFile = new File(Paths.get(Minecraft.getInstance().gameDirectory.getAbsolutePath(), "config", "hit_particles.json").toUri());
             Gson gson = new Gson();
 
             if (!configFile.exists()) {
@@ -57,7 +56,7 @@ public class ConfigSerializer {
         file.put("velocity_max", ConfigScreenFactory.velocityMax.get());
 
         try {
-            BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(Paths.get(MinecraftClient.getInstance().runDirectory.getAbsolutePath(), "config", "hit_particles.json").toUri())), StandardCharsets.UTF_8));
+            BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(Paths.get(Minecraft.getInstance().gameDirectory.getAbsolutePath(), "config", "hit_particles.json").toUri())), StandardCharsets.UTF_8));
 
             br.write(gson.setPrettyPrinting().create().toJson(file).toCharArray());
 

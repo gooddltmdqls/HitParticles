@@ -6,9 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "PlayerEntityMixin",
-    "ChatScreenMixin",
-    "SleepingChatScreenMixin"
+    "PlayerMixin",
+    "ChatScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
