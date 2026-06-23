@@ -17,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ChatScreen.class)
 public class ChatScreenMixin {
-    @ModifyArg(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
+    @ModifyArg(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
     public Screen openConfigScreen(Screen screen) {
         if (HitParticlesCommand.openConfig) {
             HitParticlesCommand.openConfig = false;
 
             return FabricLoader.getInstance().isModLoaded("cloth-config")
                     ? ConfigScreenFactory.getConfigScreen(null)
-                    : new AlertScreen(() -> Minecraft.getInstance().setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"));
+                    : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"));
         }
 
         return screen;
@@ -37,10 +37,10 @@ public class ChatScreenMixin {
         if (HitParticlesCommand.openConfig) {
             HitParticlesCommand.openConfig = false;
 
-            mc.setScreen(
+            mc.setScreenAndShow(
                     FabricLoader.getInstance().isModLoaded("cloth-config")
                             ? ConfigScreenFactory.getConfigScreen(null)
-                            : new AlertScreen(() -> Minecraft.getInstance().setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"))
+                            : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"))
             );
         }
     }

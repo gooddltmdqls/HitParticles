@@ -24,7 +24,7 @@ public class PlayerMixin {
     private static HolderLookup.Provider registries = VanillaRegistries.createLookup();
 
     @Inject(method = "attack", at = @At("TAIL"))
-    void attack(Entity target, CallbackInfo ci) {
+    void attack(Entity entity, CallbackInfo ci) {
         String particleType = ConfigScreenFactory.particleType.get();
 
         ParticleOptions result;
@@ -65,11 +65,11 @@ public class PlayerMixin {
             double velocityY = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
             double velocityZ = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
 
-            target.level().addParticle(
+            entity.level().addParticle(
                     result,
-                    target.getX() + xOffset,
-                    (spawnAtFeet ? target.getY() : (target.getBbHeight() + (target.getY() * 2)) / 2) + yOffset,
-                    target.getZ() + zOffset,
+                    entity.getX() + xOffset,
+                    (spawnAtFeet ? entity.getY() : (entity.getBbHeight() + (entity.getY() * 2)) / 2) + yOffset,
+                    entity.getZ() + zOffset,
                     (Math.random() * (velocityMax - velocityMin) + velocityMin) * velocityX,
                     (Math.random() * (velocityMax - velocityMin) + velocityMin) * velocityY,
                     (Math.random() * (velocityMax - velocityMin) + velocityMin) * velocityZ

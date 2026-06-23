@@ -13,6 +13,6 @@ public class ModMenuIntegration implements ModMenuApi {
         if (FabricLoader.getInstance().isModLoaded("cloth-config"))
             return kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory::getConfigScreen;
 
-        return (parent) -> new AlertScreen(() -> Minecraft.getInstance().setScreen(parent), Component.nullToEmpty("HitParticles"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles."));
+        return (parent) -> new AlertScreen(() -> Minecraft.getInstance().setScreenAndShow(parent), Component.nullToEmpty("HitParticles"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles."));
     }
 }
