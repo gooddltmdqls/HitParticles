@@ -1,6 +1,6 @@
-package kr.icetang0123.mods.hit_particles;
+package xyz.icetang.mod.hitparticles;
 
-import kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory;
+import xyz.icetang.mod.hitparticles.config.Configuration;
 import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,6 @@ public class HitParticles implements ClientModInitializer {
         LOGGER.info("Initialized!");
 
         HitParticlesCommand.registerCommands();
-        ConfigScreenFactory.loadConfig();
+        Configuration.loadConfig();
     }
 }

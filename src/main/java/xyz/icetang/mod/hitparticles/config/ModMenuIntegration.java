@@ -1,4 +1,4 @@
-package kr.icetang0123.mods.hit_particles.config;
+package xyz.icetang.mod.hitparticles.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -11,7 +11,7 @@ public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         if (FabricLoader.getInstance().isModLoaded("cloth-config"))
-            return kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory::getConfigScreen;
+            return xyz.icetang.mod.hitparticles.config.ConfigScreenFactory::getConfigScreen;
 
         return (parent) -> new AlertScreen(() -> Minecraft.getInstance().setScreenAndShow(parent), Component.nullToEmpty("HitParticles"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles."));
     }

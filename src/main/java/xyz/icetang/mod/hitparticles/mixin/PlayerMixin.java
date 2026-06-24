@@ -1,9 +1,9 @@
-package kr.icetang0123.mods.hit_particles.mixin;
+package xyz.icetang.mod.hitparticles.mixin;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import kr.icetang0123.mods.hit_particles.HitParticles;
-import kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory;
+import xyz.icetang.mod.hitparticles.HitParticles;
+import xyz.icetang.mod.hitparticles.config.Configuration;
 import net.minecraft.commands.arguments.ParticleArgument;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleOptions;
@@ -16,45 +16,55 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Objects;
 import java.util.Random;
 
 @Mixin(Player.class)
 public class PlayerMixin {
     @Unique
+    private static String previousParticleType = null;
+    @Unique
+    private static ParticleOptions particleOptions = null;
+    @Unique
     private static HolderLookup.Provider registries = VanillaRegistries.createLookup();
 
     @Inject(method = "attack", at = @At("TAIL"))
     void attack(Entity entity, CallbackInfo ci) {
-        String particleType = ConfigScreenFactory.particleType.get();
+        String particleType = Configuration.particleType.get();
 
-        ParticleOptions result;
+        if (!Objects.equals(previousParticleType, particleType) || particleType == null) {
+            ParticleOptions result;
 
-        StringReader reader = new StringReader(particleType);
+            StringReader reader = new StringReader(particleType);
 
-        try {
-            result = ParticleArgument.readParticle(reader, registries);
-        } catch (CommandSyntaxException ignored) {
-            HitParticles.LOGGER.warn("Failed to parse particle. Ignoring!");
+            try {
+                result = ParticleArgument.readParticle(reader, registries);
+            } catch (CommandSyntaxException ignored) {
+                HitParticles.LOGGER.warn("Failed to parse particle. Ignoring!");
 
-            result = null;
+                result = null;
+            }
+
+            previousParticleType = particleType;
+            particleOptions = result;
         }
 
-        if (result == null) return;
+        if (particleOptions == null) return;
 
-        double radiusX = ConfigScreenFactory.radiusX.get();
-        double radiusY = ConfigScreenFactory.radiusY.get();
-        double radiusZ = ConfigScreenFactory.radiusZ.get();
+        double radiusX = Configuration.radiusX.get();
+        double radiusY = Configuration.radiusY.get();
+        double radiusZ = Configuration.radiusZ.get();
 
-        double offsetX = ConfigScreenFactory.offsetX.get();
-        double offsetY = ConfigScreenFactory.offsetY.get();
-        double offsetZ = ConfigScreenFactory.offsetZ.get();
+        double offsetX = Configuration.offsetX.get();
+        double offsetY = Configuration.offsetY.get();
+        double offsetZ = Configuration.offsetZ.get();
 
-        double velocityMin = ConfigScreenFactory.velocityMin.get();
-        double velocityMax = ConfigScreenFactory.velocityMax.get();
+        double velocityMin = Configuration.velocityMin.get();
+        double velocityMax = Configuration.velocityMax.get();
 
-        boolean spawnAtFeet = ConfigScreenFactory.spawnAtFeet.get();
+        boolean spawnAtFeet = Configuration.spawnAtFeet.get();
 
-        for (int i = 0; i < ConfigScreenFactory.toInt(ConfigScreenFactory.particleCount.get()); i++) {
+        for (int i = 0; i < Configuration.toInt(Configuration.particleCount.get()); i++) {
             Random isPlusOrMinus = new Random();
 
             double xOffset = (isPlusOrMinus.nextBoolean() ? 1.0 : -1.0) * (Math.random() * radiusX) + offsetX;
@@ -66,7 +76,7 @@ public class PlayerMixin {
             double velocityZ = isPlusOrMinus.nextBoolean() ? 1.0 : -1.0;
 
             entity.level().addParticle(
-                    result,
+                    particleOptions,
                     entity.getX() + xOffset,
                     (spawnAtFeet ? entity.getY() : (entity.getBbHeight() + (entity.getY() * 2)) / 2) + yOffset,
                     entity.getZ() + zOffset,

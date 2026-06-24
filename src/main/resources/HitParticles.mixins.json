@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "kr.icetang0123.mods.hit_particles.mixin",
+  "package": "xyz.icetang.mod.hitparticles.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],

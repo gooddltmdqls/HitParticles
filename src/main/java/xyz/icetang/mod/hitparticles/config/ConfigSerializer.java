@@ -1,4 +1,4 @@
-package kr.icetang0123.mods.hit_particles.config;
+package xyz.icetang.mod.hitparticles.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,17 +43,17 @@ public class ConfigSerializer {
         Map<String, Object> file = new HashMap<>();
         GsonBuilder gson = new GsonBuilder();
 
-        file.put("particle_type", ConfigScreenFactory.particleType.get());
-        file.put("particle_count", ConfigScreenFactory.particleCount.get());
-        file.put("radius_x", ConfigScreenFactory.radiusX.get());
-        file.put("radius_y", ConfigScreenFactory.radiusY.get());
-        file.put("radius_z", ConfigScreenFactory.radiusZ.get());
-        file.put("offset_x", ConfigScreenFactory.offsetX.get());
-        file.put("offset_y", ConfigScreenFactory.offsetY.get());
-        file.put("offset_z", ConfigScreenFactory.offsetZ.get());
-        file.put("spawn_at_feet", ConfigScreenFactory.spawnAtFeet.get());
-        file.put("velocity_min", ConfigScreenFactory.velocityMin.get());
-        file.put("velocity_max", ConfigScreenFactory.velocityMax.get());
+        file.put("particle_type", Configuration.particleType.get());
+        file.put("particle_count", Configuration.particleCount.get());
+        file.put("radius_x", Configuration.radiusX.get());
+        file.put("radius_y", Configuration.radiusY.get());
+        file.put("radius_z", Configuration.radiusZ.get());
+        file.put("offset_x", Configuration.offsetX.get());
+        file.put("offset_y", Configuration.offsetY.get());
+        file.put("offset_z", Configuration.offsetZ.get());
+        file.put("spawn_at_feet", Configuration.spawnAtFeet.get());
+        file.put("velocity_min", Configuration.velocityMin.get());
+        file.put("velocity_max", Configuration.velocityMax.get());
 
         try {
             BufferedWriter br = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(Paths.get(Minecraft.getInstance().gameDirectory.getAbsolutePath(), "config", "hit_particles.json").toUri())), StandardCharsets.UTF_8));

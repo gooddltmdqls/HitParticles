@@ -1,4 +1,4 @@
-package kr.icetang0123.mods.hit_particles;
+package xyz.icetang.mod.hitparticles;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -9,9 +9,9 @@ public abstract class HitParticlesCommand {
     public static boolean openConfig = false;
 
     public static void registerCommands() {
-        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(
+        ClientCommandRegistrationCallback.EVENT.register(((dispatcher, _) -> dispatcher.register(
                 LiteralArgumentBuilder.<FabricClientCommandSource>literal("hitparticles")
-                        .executes((source) -> {
+                        .executes((_) -> {
                             openConfig = true;
 
                             return Command.SINGLE_SUCCESS;

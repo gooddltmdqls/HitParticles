@@ -13,10 +13,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "kr.icetang0123.mods.hit_particles.HitParticles"
+      "xyz.icetang.mod.hitparticles.HitParticles"
     ],
     "modmenu": [
-      "kr.icetang0123.mods.hit_particles.config.ModMenuIntegration"
+      "xyz.icetang.mod.hitparticles.config.ModMenuIntegration"
     ]
   },
   "mixins": [

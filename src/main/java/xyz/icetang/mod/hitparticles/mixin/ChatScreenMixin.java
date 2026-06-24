@@ -1,7 +1,7 @@
-package kr.icetang0123.mods.hit_particles.mixin;
+package xyz.icetang.mod.hitparticles.mixin;
 
-import kr.icetang0123.mods.hit_particles.HitParticlesCommand;
-import kr.icetang0123.mods.hit_particles.config.ConfigScreenFactory;
+import xyz.icetang.mod.hitparticles.HitParticlesCommand;
+import xyz.icetang.mod.hitparticles.config.ConfigScreenFactory;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.AlertScreen;
@@ -24,7 +24,7 @@ public class ChatScreenMixin {
 
             return FabricLoader.getInstance().isModLoaded("cloth-config")
                     ? ConfigScreenFactory.getConfigScreen(null)
-                    : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"));
+                    : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HitParticles"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"));
         }
 
         return screen;
@@ -40,7 +40,7 @@ public class ChatScreenMixin {
             mc.setScreenAndShow(
                     FabricLoader.getInstance().isModLoaded("cloth-config")
                             ? ConfigScreenFactory.getConfigScreen(null)
-                            : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HideMeToast"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"))
+                            : new AlertScreen(() -> Minecraft.getInstance().gui.setScreen(null), Component.nullToEmpty("HitParticles"), Component.nullToEmpty("You must install cloth-config mod to configure HitParticles"))
             );
         }
     }
